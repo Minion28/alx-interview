@@ -1,2 +1,1 @@
-# alx-interview
-alx interview pascal's interview repository
+pascals triangle directory
