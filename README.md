@@ -1,1 +1,1 @@
-pascals triangle directory
+pascal triangle directory
