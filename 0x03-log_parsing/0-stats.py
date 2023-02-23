@@ -2,21 +2,36 @@
 """
 Write a script that reads stdin line by line and computes metrics
 """
-import random
 import sys
-from time import sleep
-import datetime
 
+count = 0
+tot = 0
+cache = {'200': 0, '301': 0, '400': 0, '401': 0,
+         '403': 0, '404': 0, '405': 0, '500': 0}
 
-for x in range(10000):
-    sleep(random.random())
-    sys.stdout.write("{:d}.{:d}.{:d}.{:d} - [{}] \"GET /projects/260 HTTP/1.1\" {} {}\n".format(
-        random.randint(1, 255),
-        random.randint(1, 255),
-        random.randint(1, 255),
-        random.randint(1, 255),
-        datetime.datetime.now(),
-        random.choice([200, 301, 400, 401, 403, 404, 405, 500]),
-        random.randint(1, 1024)
-        ))
-    sys.stdout.flush()
+try:
+    for lines in sys.stdin:
+        llist = lines.split(" ")
+        if len(llist) > 4:
+            code = llist[-2]
+            size = int(llist[-1])
+            if code in cache.keys():
+                cache[code] += 1
+            tot += size
+            count += 1
+
+        if count == 10:
+            count = 0
+            print('File size: {}'.format(tot))
+            for key, value in sorted(cache.items()):
+                if value != 0:
+                    print('{}: {}'.format(key, value))
+
+except Exception as err:
+    pass
+
+finally:
+    print('File size: {}'.format(tot))
+    for key, value in sorted(cache.items()):
+        if value != 0:
+            print('{}: {}'.format(key, value))
