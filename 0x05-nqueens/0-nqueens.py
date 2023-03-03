@@ -35,7 +35,6 @@ def solveNQueens(n):
             output.append(copy)
             return
 
-
         for c in range(n):
 
             if c in column or (row + c) in position or (row - c) in non:
@@ -46,7 +45,6 @@ def solveNQueens(n):
             non.add(row - c)
 
             board[row] = [row, c]
-
 
             backtrack(row + 1)
 
